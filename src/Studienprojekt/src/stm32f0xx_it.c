@@ -29,6 +29,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_it.h"
+#include "Delay.h"
 
 /** @addtogroup Template_Project
   * @{
@@ -92,6 +93,7 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
+	IncrementTick();
 }
 
 /******************************************************************************/
