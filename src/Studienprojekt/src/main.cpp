@@ -9,6 +9,8 @@
 #include "stm32f0xx_conf.h"
 #include "Delay.h"
 #include "TFT_Display.h"
+#include "Colors.h"
+#include "TftFont_Helvetica_24.h"
 
 void SetupSystemClockPLL();
 void Initialize_Hardware();
@@ -24,6 +26,15 @@ int main()
 	char string[] = "System clock and hardware initialized successfully.\r\n";
 
 	printf(string);
+
+	TFT_ClearScreen();
+	TFT_SetFont(&TftFont_Helvetica_24);
+
+	PositionType a = {0, 0};
+
+	char str[] = "Hello world!!";
+
+	TFT_DrawString(&a, str);
 
 	while (1)
 	{
@@ -92,8 +103,7 @@ void printf(char * str)
 	{
 		USART_SendData(USART3, (uint16_t) (str[charpos++]));
 
-		while (!USART_GetFlagStatus(USART3, USART_FLAG_TXE))
-			;
+		while (!USART_GetFlagStatus(USART3, USART_FLAG_TXE));
 	}
 }
 

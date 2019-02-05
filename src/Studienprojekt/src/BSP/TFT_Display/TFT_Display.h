@@ -7,6 +7,7 @@
 #endif
 
 #include "StdDefs.h"
+#include "TftFont.h"
 
 // Display orientation is not intended
 #define TFT_WIDTH	240u
@@ -16,6 +17,7 @@ void TFT_Reset(void);
 void TFT_Initialize(void);
 void TFT_SetForegroundColor(uint32_t const color); // 24 bit color, initialized in BLACK
 void TFT_SetBackgroundColor(uint32_t const color); // 24 bit color, initialized in WHITE
+void TFT_SetFont(TftFontType const * font);
 void TFT_ClearScreen(void);
 void TFT_DrawPixel(PositionType * p);
 void TFT_DrawLine(PositionType * start, PositionType * end);

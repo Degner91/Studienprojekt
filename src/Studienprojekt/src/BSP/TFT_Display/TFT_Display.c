@@ -7,6 +7,8 @@
 
 #include "TFT_Display.h"
 #include "stm32f0xx.h"
+#include "Delay.h"
+#include "TftFont.h"
 
 /* Constants for the pin placement */
 /* Current setup -> APUS V1.1 */
@@ -29,6 +31,7 @@ static const uint8_t TFT_SelColMode16bpp = 0x05;
 
 static uint32_t ForegroundColor = 0x00000000;
 static uint32_t BackgroundColor = 0x00FFFFFF;
+static TftFontType * Font;
 
 /*
  * Defines the commands for the display
@@ -110,7 +113,9 @@ static void TFT_WritePixels(const uint16_t rgbPixelValue, const uint32_t num);
 static void TFT_SetWindow(const RectType* const rect);
 static uint32_t TFT_ToBSRRValue(const uint8_t data);
 static uint16_t TFT_To16bpp(const uint32_t rgbPixelValue);
-static void TFT_DrawFilledArea(const RectType* const rect, const uint16_t colour);
+static void TFT_DrawFilledArea(const RectType* const rect,
+		const uint16_t colour);
+static void TFT_DrawImage1bpp(const RectType* const rect, const uint32_t* const data, uint32_t const colours);
 
 void TFT_Reset(void)
 {
@@ -133,8 +138,8 @@ void TFT_Initialize(void)
 	gpioTFT.GPIO_Mode = GPIO_Mode_OUT;
 	gpioTFT.GPIO_OType = GPIO_OType_PP;
 	gpioTFT.GPIO_Pin = (GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 |
-			GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 |
-			GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11);
+	GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 |
+	GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 | GPIO_Pin_11);
 	gpioTFT.GPIO_Speed = GPIO_Speed_10MHz;
 
 	GPIO_Init(GPIOE, &gpioTFT);
@@ -180,38 +185,186 @@ void TFT_Initialize(void)
 
 void TFT_SetForegroundColor(uint32_t const color) // 24 bit color, initialized in BLACK
 {
-
+	ForegroundColor = color;
 }
 
 void TFT_SetBackgroundColor(uint32_t const color) // 24 bit color, initialized in WHITE
 {
+	BackgroundColor = color;
+}
 
+void TFT_SetFont(TftFontType const * font)
+{
+	Font = font;
 }
 
 void TFT_ClearScreen(void)
 {
-	const RectType rect = { { 0, 0 }, TFT_WIDTH, TFT_HEIGHT };
+	RectType const rect =
+	{
+	{ 0, 0 }, TFT_WIDTH, TFT_HEIGHT };
 	TFT_DrawFilledArea(&rect, TFT_To16bpp(BackgroundColor));
 }
 
 void TFT_DrawPixel(PositionType * p)
 {
-
+	/* Set drawing region to pixel location */
+	RectType const rect =
+	{ *p, TFT_PixelWidth, TFT_PixelHeight };
+	TFT_SetWindow(&rect);
+	/* Send write command */
+	TFT_WriteCmd(TFT_Cmd_RAMWR);
+	/* Init pixel transfer */
+	TFT_Port->BSRR = TFT_DC;
+	/* Send pixel */
+	TFT_WritePixel(ForegroundColor);
 }
 
 void TFT_DrawLine(PositionType * start, PositionType * end)
 {
+	int16_t dx, dy, loopinc, incx, incy, pdx, pdy, ddx, ddy, dsd, dfd, error;
+	PositionType act;
 
+	dx = end->x - start->x;
+	dy = end->y - start->y;
+
+	incx = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
+	incy = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
+
+	if (dx < 0)
+		dx = -dx;
+	if (dy < 0)
+		dy = -dy;
+
+	if (dx > dy)
+	{
+		/* x ist schnelle Richtung */
+		pdx = incx;
+		pdy = 0; /* pd. ist Parallelschritt */
+		ddx = incx;
+		ddy = incy; /* dd. ist Diagonalschritt */
+		dsd = dy;
+		dfd = dx; /* Delta in langsamer Richtung, Delta in schneller Richtung */
+	}
+	else
+	{
+		/* y ist schnelle Richtung */
+		pdx = 0;
+		pdy = incy; /* pd. ist Parallelschritt */
+		ddx = incx;
+		ddy = incy; /* dd. ist Diagonalschritt */
+		dsd = dx;
+		dfd = dy; /* Delta in langsamer Richtung, Delta in schneller Richtung */
+	}
+
+	act.x = start->x;
+	act.y = start->y;
+	error = dfd / 2;
+
+	TFT_DrawPixel(&act);
+
+	for (loopinc = 0; loopinc < dfd; ++loopinc)
+	{
+		error -= dsd;
+
+		if (error < 0)
+		{
+			error += dfd;
+
+			act.x += ddx;
+			act.y += ddy;
+		}
+		else
+		{
+			act.x += pdx;
+			act.y += pdy;
+		}
+
+		TFT_DrawPixel(&act);
+	}
 }
 
 void TFT_DrawChar(PositionType * p, char const c)
 {
+	const TftFont_GlyphType* glyph = &Font->glyphs[Font->glyphMap[(uint8_t) c]];
 
+	/* Check boundaries */
+	if (((p->x + glyph->width) > TFT_WIDTH) || ((p->y + Font->height) > TFT_HEIGHT))
+	{
+		return;
+	}
+
+	/* Check if bitmap available and if not draw background colour rectangle */
+	if (glyph->bitmap == 0)
+	{
+		/* Draw only background colour */
+		const RectType tmpRect = { *p, glyph->width, Font->height };
+		TFT_DrawFilledArea(&tmpRect, BackgroundColor);
+	}
+	else
+	{
+		/* Draw the chars bitmap */
+		const RectType tmpRect = { *p, glyph->width, Font->height };
+		TFT_DrawImage1bpp(&tmpRect, glyph->bitmap, ForegroundColor);
+	}
 }
 
 void TFT_DrawString(PositionType * p, char * s)
 {
+	static const char strEnd = '\0';
+	static const char endl = '\n';
 
+	char currCh = 0;
+	PositionType currPos = *p;
+
+	/* Draw char after char till terminating 0 is found */
+	while((currCh = *s++) != strEnd)
+	{
+		/* Check if line break intended */
+		if(currCh == endl)
+		{
+			/* Increment y position and set x back to initial */
+			currPos.y += Font->height;
+			currPos.x = p->x;
+		}
+		else
+		{
+			TFT_DrawChar(&currPos, currCh);
+			currPos.x += Font->glyphs[Font->glyphMap[(uint8_t)currCh]].width;
+		}
+	}
+}
+
+static void TFT_DrawImage1bpp(const RectType* const rect, const uint32_t* const data, uint32_t const colours)
+{
+	/* Set window */
+	TFT_SetWindow(rect);
+	/* Send write command */
+	TFT_WriteCmd(TFT_Cmd_RAMWR);
+	/* Init pixel transfer */
+	TFT_Port->BSRR = TFT_DC;
+
+	uint32_t currBitMask = 0;
+	uint32_t currVal = 0;
+
+	for (uint32_t i = 0; i < (rect->width * rect->height); i++)
+	{
+		/* limits i range from 0 to 31 */
+		currBitMask = 1u << (i & 0x1Fu);
+		currVal = data[i >> 5u];
+
+		/* Check if current pixel should be drawn in foreground colour */
+		if((currVal & currBitMask) == currBitMask)
+		{
+			/* If bit is set draw pixel */
+			TFT_WritePixel(ForegroundColor);
+		}
+		else
+		{
+			/* Else draw pixel in bakground colour */
+			TFT_WritePixel(BackgroundColor);
+		}
+	}
 }
 
 /************************************************************/
