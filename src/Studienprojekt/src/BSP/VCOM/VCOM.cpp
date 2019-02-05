@@ -31,7 +31,7 @@ void VCOM_Initialize()
 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_0);
 }
 
-void VCOM_Send(char * s)
+void VCOM_Print(char * s)
 {
 	uint16_t charpos = 0;
 
@@ -41,4 +41,11 @@ void VCOM_Send(char * s)
 
 		while (!USART_GetFlagStatus(USART3, USART_FLAG_TXE));
 	}
+}
+
+void VCOM_Println(char * s)
+{
+	char end[] = "\r\n";
+	VCOM_Print(s);
+	VCOM_Print(end);
 }

@@ -157,12 +157,12 @@ void TFT_Initialize(void)
 
 	/* Using busy waiting cause init function is normaly only called once
 	 * and to keep it simple */
-	Delay_10us(120);
+	Delay_ms(120);
 
 	/* After S/W reset H/W reset and power on sequence display is in sleep mode */
 	/* -> Exit sleep mode */
 	TFT_WriteCmd(TFT_Cmd_SLPOUT);
-	Delay_10us(5);
+	Delay_ms(5);
 	/* Set method of pixel data transfer */
 	TFT_WriteCmd(TFT_Cmd_MADCTL);
 	/* Init data transfer */

@@ -13,27 +13,26 @@
 #include "Fonts/Font_Helvetica_24.h"
 #include "Delay.h"
 
-void SetupSystemClockPLL();
-void Initialize_Hardware();
-void ErrorFunc();
+static void SetupSystemClockPLL();
+static void ErrorFunc();
 static void Animation();
 
 int main()
 {
 	SetupSystemClockPLL();
 	InitializeSysTick();
-	Initialize_Hardware();
-
-	char string[] = "System clock and hardware initialized successfully.\r\n";
-
-	VCOM_Send(string);
-
+	LED_Initialize();
+	VCOM_Initialize();
+	TFT_Reset();
+	TFT_Initialize();
 	TFT_ClearScreen();
 	TFT_SetFont(&Font_Helvetica_24);
 
-	PositionType a =
-	{ 0, 0 };
+	char string[] = "System clock and hardware initialized successfully.";
 
+	VCOM_Println(string);
+
+	PositionType a = { 0, 0 };
 	char str[] = "Hello world";
 
 	TFT_DrawString(&a, str);
@@ -46,7 +45,7 @@ int main()
 	return 0;
 }
 
-void SetupSystemClockPLL()
+static void SetupSystemClockPLL()
 {
 	RCC_DeInit();
 	RCC_HSEConfig(RCC_HSE_ON);
@@ -60,19 +59,14 @@ void SetupSystemClockPLL()
 	RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
 }
 
-void Initialize_Hardware()
-{
-	LED_Initialize();
-	VCOM_Initialize();
-	TFT_Reset();
-	TFT_Initialize();
-	TFT_ClearScreen();
-}
-
-void ErrorFunc()
+static void ErrorFunc()
 {
 	LED_On(Red);
-	while (1);
+	while (1)
+	{
+		LED_Toggle(Red);
+		Delay_ms(50);
+	}
 }
 
 static void Animation()

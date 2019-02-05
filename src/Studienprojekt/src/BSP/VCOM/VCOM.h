@@ -13,7 +13,8 @@
 #endif
 
 void VCOM_Initialize();
-void VCOM_Send(char * s);
+void VCOM_Print(char * s);
+void VCOM_Println(char * s);
 
 #ifdef __cplusplus
  }
