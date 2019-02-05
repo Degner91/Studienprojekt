@@ -8,19 +8,15 @@
 #include "TFT_Display.h"
 #include "stm32f0xx.h"
 #include "Delay.h"
-#include "TftFont.h"
+#include "Fonts/Font.h"
 
 /* Constants for the pin placement */
 /* Current setup -> APUS V1.1 */
-static const uint16_t TFT_nCS = GPIO_Pin_8;
-static const uint16_t TFT_nWR = GPIO_Pin_10;
-static const uint16_t TFT_nRD = GPIO_Pin_11;
-static const uint16_t TFT_DC = GPIO_Pin_9;
+static const uint16_t TFT_nCS  = GPIO_Pin_8;
+static const uint16_t TFT_nWR  = GPIO_Pin_10;
+static const uint16_t TFT_nRD  = GPIO_Pin_11;
+static const uint16_t TFT_DC   = GPIO_Pin_9;
 static const uint16_t TFT_nRES = GPIO_Pin_10;
-
-/* Interface port */
-static GPIO_TypeDef * const TFT_Port = GPIOE;
-static GPIO_TypeDef * const TFT_ResPort = GPIOF;
 
 /* Helper constants */
 static const uint8_t TFT_Shift1Byte = 8;
@@ -31,7 +27,7 @@ static const uint8_t TFT_SelColMode16bpp = 0x05;
 
 static uint32_t ForegroundColor = 0x00000000;
 static uint32_t BackgroundColor = 0x00FFFFFF;
-static TftFontType * Font;
+static FontType const * Font;
 
 /*
  * Defines the commands for the display
@@ -120,7 +116,7 @@ static void TFT_DrawImage1bpp(const RectType* const rect, const uint32_t* const 
 void TFT_Reset(void)
 {
 	/* Set reset active */
-	TFT_ResPort->BRR = TFT_nRES;
+	GPIOF->BRR = TFT_nRES;
 	/* wait for at least 10 us */
 	Delay_10us(1);
 }
@@ -150,14 +146,14 @@ void TFT_Initialize(void)
 	GPIO_Init(GPIOF, &gpioTFT);
 
 	/* Set read and write inactive */
-	TFT_Port->BSRR = TFT_nRD | TFT_nWR;
+	GPIOE->BSRR = TFT_nRD | TFT_nWR;
 	/* Set chip enabled */
 	/* Chip can always stay enabled cause there is no other chip */
 	/* on the same bus */
-	TFT_Port->BRR = TFT_nCS;
+	GPIOE->BRR = TFT_nCS;
 
 	/* Set reset inactive */
-	TFT_ResPort->BSRR = TFT_nRES;
+	GPIOF->BSRR = TFT_nRES;
 
 	/* Using busy waiting cause init function is normaly only called once
 	 * and to keep it simple */
@@ -170,13 +166,13 @@ void TFT_Initialize(void)
 	/* Set method of pixel data transfer */
 	TFT_WriteCmd(TFT_Cmd_MADCTL);
 	/* Init data transfer */
-	TFT_Port->BSRR = TFT_DC;
+	GPIOE->BSRR = TFT_DC;
 	TFT_WriteData(0);
 
 	/* Set choosen colour resolution */
 	TFT_WriteCmd(TFT_Cmd_COLMOD);
 	/* Init data transfer */
-	TFT_Port->BSRR = TFT_DC;
+	GPIOE->BSRR = TFT_DC;
 	TFT_WriteData(TFT_SelColMode16bpp);
 
 	/* Enable display */
@@ -193,7 +189,7 @@ void TFT_SetBackgroundColor(uint32_t const color) // 24 bit color, initialized i
 	BackgroundColor = color;
 }
 
-void TFT_SetFont(TftFontType const * font)
+void TFT_SetFont(FontType const * const font)
 {
 	Font = font;
 }
@@ -215,7 +211,7 @@ void TFT_DrawPixel(PositionType * p)
 	/* Send write command */
 	TFT_WriteCmd(TFT_Cmd_RAMWR);
 	/* Init pixel transfer */
-	TFT_Port->BSRR = TFT_DC;
+	GPIOE->BSRR = TFT_DC;
 	/* Send pixel */
 	TFT_WritePixel(ForegroundColor);
 }
@@ -286,7 +282,7 @@ void TFT_DrawLine(PositionType * start, PositionType * end)
 
 void TFT_DrawChar(PositionType * p, char const c)
 {
-	const TftFont_GlyphType* glyph = &Font->glyphs[Font->glyphMap[(uint8_t) c]];
+	const Font_GlyphType* glyph = &Font->glyphs[Font->glyphMap[(uint8_t) c]];
 
 	/* Check boundaries */
 	if (((p->x + glyph->width) > TFT_WIDTH) || ((p->y + Font->height) > TFT_HEIGHT))
@@ -342,7 +338,7 @@ static void TFT_DrawImage1bpp(const RectType* const rect, const uint32_t* const 
 	/* Send write command */
 	TFT_WriteCmd(TFT_Cmd_RAMWR);
 	/* Init pixel transfer */
-	TFT_Port->BSRR = TFT_DC;
+	GPIOE->BSRR = TFT_DC;
 
 	uint32_t currBitMask = 0;
 	uint32_t currVal = 0;
@@ -371,15 +367,15 @@ static void TFT_DrawImage1bpp(const RectType* const rect, const uint32_t* const 
 static void TFT_WriteData(uint8_t data)
 {
 	/* Initiate write cycle and put data on GPIOs */
-	TFT_Port->BSRR = TFT_ToBSRRValue(data) | (TFT_nWR << TFT_ShiftHalfWord);
+	GPIOE->BSRR = TFT_ToBSRRValue(data) | (TFT_nWR << TFT_ShiftHalfWord);
 	/* Stop writing sequence */
-	TFT_Port->BSRR = TFT_nWR;
+	GPIOE->BSRR = TFT_nWR;
 }
 
 static void TFT_WriteCmd(const TFT_CmdType command)
 {
 	/* Init command transfer */
-	TFT_Port->BSRR = TFT_DC << TFT_ShiftHalfWord;
+	GPIOE->BSRR = TFT_DC << TFT_ShiftHalfWord;
 	/* Send command */
 	TFT_WriteData((uint8_t) command);
 }
@@ -387,14 +383,14 @@ static void TFT_WriteCmd(const TFT_CmdType command)
 static void TFT_WritePixel(const uint16_t rgbPixelValue)
 {
 	/* Write first byte */
-	TFT_Port->BSRR = TFT_ToBSRRValue(
+	GPIOE->BSRR = TFT_ToBSRRValue(
 			(uint8_t) (rgbPixelValue >> TFT_Shift1Byte))
 			| (TFT_nWR << TFT_ShiftHalfWord);
-	TFT_Port->BSRR = TFT_nWR;
+	GPIOE->BSRR = TFT_nWR;
 	/* Write second byte */
-	TFT_Port->BSRR = TFT_ToBSRRValue((uint8_t) rgbPixelValue)
+	GPIOE->BSRR = TFT_ToBSRRValue((uint8_t) rgbPixelValue)
 			| (TFT_nWR << TFT_ShiftHalfWord);
-	TFT_Port->BSRR = TFT_nWR;
+	GPIOE->BSRR = TFT_nWR;
 }
 
 static void TFT_WritePixels(const uint16_t rgbPixelValue, uint32_t num)
@@ -402,7 +398,7 @@ static void TFT_WritePixels(const uint16_t rgbPixelValue, uint32_t num)
 	/* Send write command */
 	TFT_WriteCmd(TFT_Cmd_RAMWR);
 	/* Init pixel transfer */
-	TFT_Port->BSRR = TFT_DC;
+	GPIOE->BSRR = TFT_DC;
 
 	/* Seperate transmit bytes and get the corresponding bsrr value */
 	uint32_t bsrrVal1 = TFT_ToBSRRValue(
@@ -414,13 +410,13 @@ static void TFT_WritePixels(const uint16_t rgbPixelValue, uint32_t num)
 	while ((num--) > 0)
 	{
 		/* Initiate write cycle and put data on GPIOs */
-		TFT_Port->BSRR = bsrrVal1;
+		GPIOE->BSRR = bsrrVal1;
 		/* Stop writing sequence */
-		TFT_Port->BSRR = TFT_nWR;
+		GPIOE->BSRR = TFT_nWR;
 		/* Initiate write cycle and put data on GPIOs */
-		TFT_Port->BSRR = bsrrVal2;
+		GPIOE->BSRR = bsrrVal2;
 		/* Stop writing sequence */
-		TFT_Port->BSRR = TFT_nWR;
+		GPIOE->BSRR = TFT_nWR;
 	}
 }
 
@@ -432,7 +428,7 @@ static void TFT_SetWindow(const RectType* const rect)
 	/* Set column span */
 	TFT_WriteCmd(TFT_Cmd_CASET);
 	/* Init data transfer */
-	TFT_Port->BSRR = TFT_DC;
+	GPIOE->BSRR = TFT_DC;
 	TFT_WriteData((uint8_t) (rect->pos.x >> TFT_Shift1Byte)); /* Column address start MSB */
 	TFT_WriteData((uint8_t) rect->pos.x); /* Column address start LSB */
 	TFT_WriteData((uint8_t) (xe >> TFT_Shift1Byte)); /* Column address end MSB */
@@ -441,7 +437,7 @@ static void TFT_SetWindow(const RectType* const rect)
 	/* Set row span */
 	TFT_WriteCmd(TFT_Cmd_RASET);
 	/* Init data transfer */
-	TFT_Port->BSRR = TFT_DC;
+	GPIOE->BSRR = TFT_DC;
 	TFT_WriteData((uint8_t) (rect->pos.y >> TFT_Shift1Byte)); /* Row address start MSB */
 	TFT_WriteData((uint8_t) rect->pos.y); /* Row address start LSB */
 	TFT_WriteData((uint8_t) (ye >> TFT_Shift1Byte)); /* Row address end MSB */

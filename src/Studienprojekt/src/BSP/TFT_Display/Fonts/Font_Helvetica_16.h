@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file    TftFont_Helvetica_16.h
+ * @file    Font_Helvetica_16.h
  * @author  Auto-generated
  * @version V1.0.0
  * @date    08.06.2017
@@ -17,10 +17,10 @@
  ******************************************************************************
  */
 
-#ifndef TFTFONT_HELVETICA_16_H
-#define TFTFONT_HELVETICA_16_H
+#ifndef FONT_HELVETICA_16_H
+#define FONT_HELVETICA_16_H
 
-#include "TftFont.h"
+#include "Font.h"
 
 /****************************************************************
  * Macros                                                       *
@@ -28,12 +28,12 @@
 /**
  * @brief Height of the font
  */
-#define TFTFONT_HELVETICA_16_HEIGHT	21
+#define FONT_HELVETICA_16_HEIGHT	21
 
 /**
  * @brief Number of glyphs
  */
-#define TFTFONT_HELVETICA_16_GLYPH_COUNT	191
+#define FONT_HELVETICA_16_GLYPH_COUNT	191
 
 /****************************************************************
  * Global variables                                             *
@@ -41,6 +41,6 @@
 /**
  * @brief Extern declaration of the Font
  */
-extern const TftFontType TftFont_Helvetica_16;
+extern const FontType Font_Helvetica_16;
 
 #endif

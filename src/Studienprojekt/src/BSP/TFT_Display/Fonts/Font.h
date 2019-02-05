@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file    TftFont.h
+ * @file    Font.h
  * @author  Julian Grasböck
  * @version V1.0.0
  * @date    18.04.2017
@@ -17,8 +17,8 @@
  *  @{
  */
  
-#ifndef TFTFONT_H
-#define TFTFONT_H
+#ifndef FONT_H
+#define FONT_H
 
 #include "StdDefs.h"
 
@@ -32,7 +32,7 @@
 /**
  * @brief Defines the number of characters
  */
-#define TFTFONT_CHAR_CNT	256u
+#define FONT_CHAR_CNT	256u
 
 /****************************************************************
  * Type definitions
@@ -45,7 +45,7 @@ typedef struct
 {
 	uint32_t width;         /**< The width in pixel */
 	const uint32_t* bitmap; /**< The bitmap with 1 bit per pixel */
-} TftFont_GlyphType;
+} Font_GlyphType;
 
 /**
  * @brief Represents a font
@@ -54,13 +54,13 @@ typedef struct
  */
 typedef struct
 {
-	uint8_t glyphMap[TFTFONT_CHAR_CNT];		/**< Maps the ISO/IEC 8859-1 characters to glyphs array
+	uint8_t glyphMap[FONT_CHAR_CNT];		/**< Maps the ISO/IEC 8859-1 characters to glyphs array
 																				 *	 by saving the corresponding index in the glyps array
 																				 *	 for each character */
 	uint32_t glyphCount;									/**< Number of glyphs in the font (size of the glyphs array) */
 	uint32_t height;       								/**< Height of each glyph in pixels */
-	const TftFont_GlyphType* glyphs;			/**< The array of glyphs */
-} TftFontType;
+	const Font_GlyphType* glyphs;			/**< The array of glyphs */
+} FontType;
 
 /****************************************************************
  * User functions
@@ -73,8 +73,8 @@ typedef struct
  * @param str The string
  * @return The width of the string in pixel
  */
-uint32_t TftFont_GetStrWidth(const TftFontType* const font, const char* str);
+uint32_t Font_GetStrWidth(const FontType* const font, const char* str);
 
-#endif /* TFTFONT_H */
+#endif /* FONT_H */
 
 /** @}*/

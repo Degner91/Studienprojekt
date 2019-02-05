@@ -5,17 +5,18 @@
  *      Author: degne
  */
 
-#include "stm32f0xx.h"
-#include "stm32f0xx_conf.h"
-#include "Delay.h"
+#include "stm32f0xx_rcc.h"
+#include "LED.h"
+#include "VCOM.h"
 #include "TFT_Display.h"
-#include "Colors.h"
-#include "TftFont_Helvetica_24.h"
+#include "Color.h"
+#include "Fonts/Font_Helvetica_24.h"
+#include "Delay.h"
 
 void SetupSystemClockPLL();
 void Initialize_Hardware();
-void printf(char * str);
 void ErrorFunc();
+static void Animation();
 
 int main()
 {
@@ -25,23 +26,21 @@ int main()
 
 	char string[] = "System clock and hardware initialized successfully.\r\n";
 
-	printf(string);
+	VCOM_Send(string);
 
 	TFT_ClearScreen();
-	TFT_SetFont(&TftFont_Helvetica_24);
+	TFT_SetFont(&Font_Helvetica_24);
 
-	PositionType a = {0, 0};
+	PositionType a =
+	{ 0, 0 };
 
-	char str[] = "Hello world!!";
+	char str[] = "Hello world";
 
 	TFT_DrawString(&a, str);
 
 	while (1)
 	{
-		Delay_10us(100000);
-		GPIO_WriteBit(GPIOC, GPIO_Pin_0, Bit_RESET);
-		Delay_10us(100000);
-		GPIO_WriteBit(GPIOC, GPIO_Pin_0, Bit_SET);
+		Animation();
 	}
 
 	return 0;
@@ -63,54 +62,31 @@ void SetupSystemClockPLL()
 
 void Initialize_Hardware()
 {
-	GPIO_DeInit(GPIOC);
-	RCC_AHBPeriphClockCmd(RCC_AHBENR_GPIOCEN, ENABLE);
-	GPIO_InitTypeDef gpioLED;
-	gpioLED.GPIO_Mode = GPIO_Mode_OUT;
-	gpioLED.GPIO_OType = GPIO_OType_OD;
-	gpioLED.GPIO_Pin = (GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2);
-	GPIO_Init(GPIOC, &gpioLED);
-	GPIO_WriteBit(GPIOC, (GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2), Bit_SET);
-
-	USART_DeInit(USART3);
-	RCC_APB1PeriphClockCmd(RCC_APB1ENR_USART3EN, ENABLE);
-	USART_InitTypeDef usartVCOM;
-	USART_StructInit(&usartVCOM); // sets all as I want except baud rate
-	usartVCOM.USART_BaudRate = 115200;
-	USART_Init(USART3, &usartVCOM);
-	USART_Cmd(USART3, ENABLE);
-
-	RCC_AHBPeriphClockCmd(RCC_AHBENR_GPIODEN, ENABLE);
-	GPIO_InitTypeDef gpioVCOM;
-	gpioVCOM.GPIO_Mode = GPIO_Mode_AF;
-	gpioVCOM.GPIO_OType = GPIO_OType_PP;
-	gpioVCOM.GPIO_Pin = (GPIO_Pin_8 | GPIO_Pin_9);
-	gpioVCOM.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_Init(GPIOD, &gpioVCOM);
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_0);
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_0);
-
+	LED_Initialize();
+	VCOM_Initialize();
 	TFT_Reset();
 	TFT_Initialize();
 	TFT_ClearScreen();
 }
 
-void printf(char * str)
-{
-	uint16_t charpos = 0;
-
-	while (str[charpos] != '\0')
-	{
-		USART_SendData(USART3, (uint16_t) (str[charpos++]));
-
-		while (!USART_GetFlagStatus(USART3, USART_FLAG_TXE));
-	}
-}
-
 void ErrorFunc()
 {
-	GPIO_WriteBit(GPIOC, GPIO_Pin_0, Bit_RESET);
+	LED_On(Red);
+	while (1);
+}
 
-	while (1)
-		;
+static void Animation()
+{
+	LED_On(Red);
+	Delay_ms(200);
+	LED_On(Yellow);
+	Delay_ms(200);
+	LED_On(Green);
+	Delay_ms(600);
+	LED_Off(Red);
+	Delay_ms(200);
+	LED_Off(Yellow);
+	Delay_ms(200);
+	LED_Off(Green);
+	Delay_ms(600);
 }

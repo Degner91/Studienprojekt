@@ -12,6 +12,8 @@ void InitializeSysTick(void);
 uint32_t GetTick(void);
 void IncrementTick(void);
 void Delay_10us(uint32_t const delay);
+void Delay_ms(uint32_t const delay);
+void Delay_sec(uint32_t const delay);
 
 #ifdef __cplusplus
  }

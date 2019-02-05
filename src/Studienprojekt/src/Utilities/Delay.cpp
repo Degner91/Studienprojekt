@@ -32,3 +32,17 @@ void Delay_10us(uint32_t const delay)
 
 	while (GetTick() < (start + delay));
 }
+
+void Delay_ms(uint32_t const delay)
+{
+	uint32_t start = GetTick();
+
+	while (GetTick() < (start + (100 * delay)));
+}
+
+void Delay_sec(uint32_t const delay)
+{
+	uint32_t start = GetTick();
+
+	while (GetTick() < (start + (100000 * delay)));
+}

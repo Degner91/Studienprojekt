@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file    TftFont.c
+ * @file    Font.c
  * @author  Julian Grasböck
  * @version V1.0.0
  * @date    18.04.2017
@@ -11,12 +11,12 @@
  ******************************************************************************
  */
 
-#include "TftFont.h"
+#include "Font.h"
 
 /*
  * Sums up the width of all chars in the string
  */
-uint32_t TftFont_GetStrWidth(const TftFontType* const font, const char* str)
+uint32_t Font_GetStrWidth(const FontType* const font, const char* str)
 {
 	static const char strEnd = '\0';
 	uint32_t width = 0;

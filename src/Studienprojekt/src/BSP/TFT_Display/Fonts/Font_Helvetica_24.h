@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * @file    TftFont_Helvetica_24.h
+ * @file    Font_Helvetica_24.h
  * @author  Auto-generated
  * @version V1.0.0
  * @date    08.06.2017
@@ -20,7 +20,7 @@
 #ifndef TFTFONT_HELVETICA_24_H
 #define TFTFONT_HELVETICA_24_H
 
-#include "TftFont.h"
+#include "Font.h"
 
 /****************************************************************
  * Macros                                                       *
@@ -28,12 +28,12 @@
 /**
  * @brief Height of the font
  */
-#define TFTFONT_HELVETICA_24_HEIGHT	32
+#define FONT_HELVETICA_24_HEIGHT	32
 
 /**
  * @brief Number of glyphs
  */
-#define TFTFONT_HELVETICA_24_GLYPH_COUNT	191
+#define FONT_HELVETICA_24_GLYPH_COUNT	191
 
 /****************************************************************
  * Global variables                                             *
@@ -41,6 +41,6 @@
 /**
  * @brief Extern declaration of the Font
  */
-extern const TftFontType TftFont_Helvetica_24;
+extern const FontType Font_Helvetica_24;
 
 #endif
