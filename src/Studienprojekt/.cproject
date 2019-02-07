@@ -53,6 +53,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/LED}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/TFT_Display}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/VCOM}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/W5500}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.601390342" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
@@ -83,6 +84,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/LED}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/VCOM}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/TFT_Display}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/W5500}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.gpp.symbols.defined.782129148" name="Defined symbols" superClass="com.atollic.truestudio.gpp.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>

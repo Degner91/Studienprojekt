@@ -12,14 +12,20 @@
 #include "Color.h"
 #include "Fonts/Font_Helvetica_24.h"
 #include "Delay.h"
+#include "W5500.h"
+#include <stdio.h>
 
-static void SetupSystemClockPLL();
+WIZnet_W5500 w5500;
+
+static uint8_t MAC_Address[] = { 0xCA, 0xFE, 0xBA, 0xBE, 0x22, 0x06 };
+
+static void SystemClockConfig();
 static void ErrorFunc();
 static void Animation();
 
 int main()
 {
-	SetupSystemClockPLL();
+	SystemClockConfig();
 	InitializeSysTick();
 	LED_Initialize();
 	VCOM_Initialize();
@@ -27,15 +33,22 @@ int main()
 	TFT_Initialize();
 	TFT_ClearScreen();
 	TFT_SetFont(&Font_Helvetica_24);
+	TFT_SetBackgroundColor(TFT_COLOUR_WHITE);
+	TFT_SetForegroundColor(TFT_COLOUR_BLACK);
 
-	char string[] = "System clock and hardware initialized successfully.";
+	char buffer[16];
 
-	VCOM_Println(string);
+	w5500.Initialize(MAC_Address);
+	uint8_t vernum = 0;
+	PositionType a =
+	{ 0, 0 };
 
-	PositionType a = { 0, 0 };
-	char str[] = "Hello world";
+	vernum = w5500.ReadVersionNumber();
+	snprintf(buffer, 16, "VN: %d", vernum);
+	TFT_DrawString(&a, buffer);
 
-	TFT_DrawString(&a, str);
+	if (!w5500.TestMACWrite(MAC_Address))
+		ErrorFunc();
 
 	while (1)
 	{
@@ -45,7 +58,7 @@ int main()
 	return 0;
 }
 
-static void SetupSystemClockPLL()
+static void SystemClockConfig()
 {
 	RCC_DeInit();
 	RCC_HSEConfig(RCC_HSE_ON);
