@@ -8,6 +8,8 @@
 #include "W5500.h"
 #include <string.h>
 
+static uint32_t const BufferSize_Max = 16;
+
 uint8_t WIZnet_W5500::wizchip_read(uint8_t block, uint16_t address)
 {
 	uint8_t ret;
@@ -228,11 +230,8 @@ int8_t WIZnet_W5500::wizphy_setphypmode(uint8_t pmode)
 	return -1;
 }
 
-void WIZnet_W5500::Initialize(uint8_t const * address)
+void WIZnet_W5500::Initialize()
 {
-	for (uint8_t idx = 0; idx < 6; ++idx)
-		macAddress[idx] = (uint8_t)address[idx];
-
 	// Init SPI
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBENR_GPIOBEN, ENABLE);
@@ -286,11 +285,25 @@ void WIZnet_W5500::Initialize(uint8_t const * address)
 	 */
 }
 
+void WIZnet_W5500::Configure(uint8_t const * address)
+{
+	for (uint8_t idx = 0; idx < 6; ++idx)
+		macAddress[idx] = (uint8_t) address[idx];
+
+	// Use the full 16Kb of RAM for Socket 0
+	setSn_RXBUF_SIZE(BufferSize_Max);
+	setSn_TXBUF_SIZE(BufferSize_Max);
+
+	// Set our local MAC address
+	setSHAR (macAddress);
+	// set ip gateway etc
+}
+
 bool WIZnet_W5500::OpenSocket()
 {
 	uint8_t tmp = 0;
 	// Open Socket 0 in MACRaw mode
-	setSn_MR(Sn_MR_MACRAW);
+	setSn_MR(Sn_MR_MACRAW | Sn_MR_MIP6B);
 	setSn_CR(Sn_CR_OPEN);
 	tmp = getSn_SR();
 
@@ -401,21 +414,4 @@ int16_t WIZnet_W5500::TransmitFrame(uint8_t const * buffer,
 uint8_t WIZnet_W5500::ReadVersionNumber()
 {
 	return wizchip_read(BlockSelectCReg, VERSIONR);
-}
-
-bool WIZnet_W5500::TestMACWrite(uint8_t const * mac)
-{
-	setSHAR(mac);
-
-	uint8_t test[6];
-
-	getSHAR(test);
-
-	for (uint8_t i = 0; i < 6; ++i)
-	{
-		if (mac[i] != (test[i]))
-			return false;
-	}
-
-	return true;
 }

@@ -13,14 +13,14 @@
 class WIZnet_W5500
 {
 public:
-	void Initialize(uint8_t const * address);
+	void Initialize();
+	void Configure(uint8_t const * address);
 	bool OpenSocket();
 	void CloseSocket();
 	int16_t TransmitFrame(uint8_t const * buffer, uint16_t const buffer_length);
 	uint16_t ReceiveFrame(uint8_t * buffer, uint16_t const buffer_length);
 
 	uint8_t ReadVersionNumber();
-	bool TestMACWrite(uint8_t const * mac);
 
 private:
 	uint8_t macAddress[6];

@@ -39,7 +39,7 @@ void VCOM_Print(char * s)
 	{
 		USART_SendData(USART3, (uint16_t) (s[charpos++]));
 
-		while (!USART_GetFlagStatus(USART3, USART_FLAG_TXE));
+		while (!USART_GetFlagStatus(USART3, USART_FLAG_TC));
 	}
 }
 
