@@ -3,6 +3,8 @@
 
 #include "StdDefs.h"
 #include "Fonts/Font.h"
+#include "stdint.h"
+#include "Color.h"
 
 class TFT_Display
 {
@@ -12,17 +14,20 @@ public:
 		static TFT_Display instance;
 		return instance;
 	}
-	~TFT_Display() {}
+	~TFT_Display()
+	{
+	}
 
 	// Dynamic display orientation is not intended in this project
-	static uint16_t const WIDTH = 240;
-	static uint16_t const HEIGHT = 320;
+	static uint32_t const WIDTH = 240;
+	static uint32_t const HEIGHT = 320;
 
 	void Initialize();
+	void Reset();
 	void SetForegroundColor(uint32_t const color); // 24 bit color, initialized in BLACK
 	void SetBackgroundColor(uint32_t const color); // 24 bit color, initialized in WHITE
-	void SetFont(FontType const * const f);
-	void ClearScreen();
+	void SetFont(FontType const * const font);
+	void ClearScreen(void);
 	void DrawPixel(PositionType const * const p);
 	void DrawLine(PositionType const * const start, PositionType const * const end);
 	void DrawChar(PositionType const * const p, char const c);
@@ -30,13 +35,14 @@ public:
 
 private:
 	// prevent more than one instances
-	TFT_Display() {foregroundColor = 0; backgroundColor = 0; font = 0;}
+	TFT_Display()
+	{
+		foregroundColor = TFT_COLOUR_BLACK;
+		backgroundColor = TFT_COLOUR_WHITE;
+		font = 0;
+	}
 	TFT_Display(TFT_Display const &);
 	TFT_Display& operator =(TFT_Display const &);
-
-	uint32_t foregroundColor;
-	uint32_t backgroundColor;
-	FontType const * font;
 
 	/*
 	 * Defines the commands for the display
@@ -109,13 +115,17 @@ private:
 
 	void WriteData(uint8_t const data);
 	void WriteCmd(CmdType const command);
-	uint16_t To16bpp(uint32_t const rgbPixelValue);
-	uint32_t ToBSRRValue(uint8_t data);
 	void WritePixel(uint16_t const rgbPixelValue);
 	void WritePixels(uint16_t const rgbPixelValue, uint32_t const num);
 	void SetWindow(RectType const * const rect);
+	uint32_t ToBSRRValue(uint8_t const data);
+	uint16_t To16bpp(uint32_t const rgbPixelValue);
 	void DrawFilledArea(RectType const * const rect, uint16_t const colour);
 	void DrawImage1bpp(RectType const * const rect, uint32_t const * const data, uint32_t const colours);
+
+	uint32_t foregroundColor;
+	uint32_t backgroundColor;
+	FontType const * font;
 };
 
 #endif

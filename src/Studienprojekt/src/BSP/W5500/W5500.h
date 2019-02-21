@@ -13,6 +13,13 @@
 class WIZnet_W5500
 {
 public:
+	static WIZnet_W5500& GetInstance()
+	{
+		static WIZnet_W5500 instance;
+		return instance;
+	}
+	~WIZnet_W5500() {}
+
 	void Initialize();
 	void Configure(uint8_t const * address);
 	bool OpenSocket();
@@ -23,6 +30,13 @@ public:
 	uint8_t ReadVersionNumber();
 
 private:
+	// prevent more than one instances
+	WIZnet_W5500() { isInitialized = false; }
+	WIZnet_W5500(WIZnet_W5500 const &);
+	WIZnet_W5500& operator = (WIZnet_W5500 const &);
+
+	bool isInitialized;
+
 	uint8_t macAddress[6];
 
 	static const uint8_t AccessModeRead = (0x00 << 2); //< SPI interface Read operation in Control Phase

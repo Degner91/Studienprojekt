@@ -54,9 +54,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/TFT_Display}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/VCOM}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/W5500}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/Button}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.601390342" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+									<listOptionValue builtIn="false" value="STM32F072"/>
 								</option>
 								<inputType id="com.atollic.truestudio.gcc.input.827662520" superClass="com.atollic.truestudio.gcc.input"/>
 							</tool>
@@ -85,6 +88,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/VCOM}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/TFT_Display}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/W5500}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/Button}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.gpp.symbols.defined.782129148" name="Defined symbols" superClass="com.atollic.truestudio.gpp.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
@@ -111,7 +116,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
-						<entry excluding="CMSIS/Source|STM32F0xx_StdPeriph_Driver/src" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="system"/>
+						<entry excluding="STM32F0xx_StdPeriph_Driver/src|CMSIS/Source" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="system"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="system/CMSIS/Source"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="system/STM32F0xx_StdPeriph_Driver/src"/>
 					</sourceEntries>
@@ -190,7 +195,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f0xx.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f0xx_ld.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f091.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f070xb.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f070x6.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f051.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f042.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f031.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f030xc.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f030.s" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f070x6.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f0xx.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f0xx_ld.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f042.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f030xc.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f091.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f070xb.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f051.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f031.s|lib/CMSIS/Device/ST/STM32F0xx/Source/Templates/TrueSTUDIO/startup_stm32f030.s" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

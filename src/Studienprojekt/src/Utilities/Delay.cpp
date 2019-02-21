@@ -12,7 +12,8 @@ static uint32_t TickCount = 0;
 
 void InitializeSysTick(void)
 {
-	SysTick_Config(SystemCoreClock / 100000);
+	SysTick_Config(SystemCoreClock / 1000);
+	NVIC_SetPriority(SysTick_IRQn, 0);
 	NVIC_EnableIRQ(SysTick_IRQn);
 }
 
@@ -24,13 +25,6 @@ uint32_t GetTick(void)
 void IncrementTick(void)
 {
 	TickCount++;
-}
-
-void Delay_10us(uint32_t const delay)
-{
-	uint32_t start = GetTick();
-
-	while (GetTick() < (start + delay));
 }
 
 void Delay_ms(uint32_t const delay)

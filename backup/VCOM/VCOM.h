@@ -24,11 +24,9 @@ public:
 
 private:
 	// prevent more than one instances
-	VCOM() { isInitialized = false; }
+	VCOM() {}
 	VCOM(VCOM const &);
 	VCOM& operator =(VCOM const &);
-
-	bool isInitialized;
 };
 
 #endif /* BSP_VCOM_VCOM_H_ */

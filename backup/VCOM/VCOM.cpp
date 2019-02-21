@@ -29,15 +29,10 @@ void VCOM::Initialize()
 	GPIO_Init(GPIOD, &gpioVCOM);
 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_0);
 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_0);
-
-	isInitialized = true;
 }
 
 void VCOM::Print(char const * const str)
 {
-	if (!isInitialized)
-		return;
-
 	uint16_t charpos = 0;
 
 	while (str[charpos] != '\0')
@@ -50,9 +45,6 @@ void VCOM::Print(char const * const str)
 
 void VCOM::Println(char const * const str)
 {
-	if (!isInitialized)
-		return;
-
 	char const end[] = "\r\n";
 	Print(str);
 	Print(end);

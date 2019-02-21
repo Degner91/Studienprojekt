@@ -264,7 +264,7 @@ void WIZnet_W5500::Initialize()
 	spi.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	spi.SPI_DataSize = SPI_DataSize_8b;
 	spi.SPI_FirstBit = SPI_FirstBit_MSB;
-	spi.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_64;
+	spi.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
 	spi.SPI_CPOL = SPI_CPOL_Low;
 	spi.SPI_CPHA = SPI_CPHA_1Edge;
 	spi.SPI_CRCPolynomial = 0;
@@ -275,14 +275,6 @@ void WIZnet_W5500::Initialize()
 	SPI_Cmd(SPI2, ENABLE);
 
 	wizchip_sw_reset();
-	/* TODO make W5500_Configure()
-	 // Use the full 16Kb of RAM for Socket 0
-	 setSn_RXBUF_SIZE(16);
-	 setSn_TXBUF_SIZE(16);
-
-	 // Set our local MAC address
-	 setSHAR(macAddress);
-	 */
 }
 
 void WIZnet_W5500::Configure(uint8_t const * address)
