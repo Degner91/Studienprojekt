@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 
+
 void InitializeSysTick(void);
 uint32_t GetTick(void);
 void IncrementTick(void);

@@ -99,6 +99,14 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 	IncrementTick();
+
+	if (GetTick() % 1000 == 0)
+	{
+		// do sth
+		// - dhcp 1s handler
+	}
+
+	NVIC_ClearPendingIRQ(SysTick_IRQn);
 }
 
 void EXTI0_1_IRQHandler(void)

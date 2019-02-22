@@ -12,10 +12,11 @@
 #include "W5500.h"
 #include "TFT_Display.h"
 #include "Color.h"
-#include "Fonts/Font_Helvetica_16.h"
+//#include "Fonts/Font_Helvetica_16.h"
 #include "Fonts/Font_Helvetica_24.h"
 #include "Delay.h"
 #include <stdio.h>
+
 
 static LED & leds = LED::GetInstance();
 static Button & buttons = Button::GetInstance();
@@ -80,6 +81,7 @@ int main()
 		// Evaluate next ethernet frame
 		// w5500.ReceiveFrame(frame, framelength);
 		// DecodeEthFrame(frame);
+
 		PrintScreen(currentScreen);
 		Delay_sec(1);
 
@@ -203,3 +205,4 @@ static void PrintFooter(Screen s)
 		break;
 	}
 }
+
