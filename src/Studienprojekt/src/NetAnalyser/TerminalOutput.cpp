@@ -175,6 +175,7 @@ void Terminal_PrintDetails(FrameDecoder const & decoder, uint8_t const macIdx)
 
 void Terminal_PrintOverview(NetData const * all)
 {
+	vcom.Println("Overview");
 	vcom.Println("General packet counter");
 
 	snprintf(VCOM_Buffer, VCOM_BufferSize, "ARP: %d", all->arp.received);
