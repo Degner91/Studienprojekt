@@ -1,0 +1,4 @@
+<map id="VCOM::Println" name="VCOM::Println">
+<area shape="rect" id="node1" title="Print string with line break (\r )" alt="" coords="5,5,112,32"/>
+<area shape="rect" id="node2" href="$class_v_c_o_m.html#ab23752b1eec4b8b4baaeefb20395c9f8" title="Print string without line break (\r )" alt="" coords="160,5,256,32"/>
+</map>

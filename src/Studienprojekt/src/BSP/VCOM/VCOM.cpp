@@ -1,8 +1,11 @@
-/*
- * VCOM.cpp
- *
- *  Created on: 05.02.2019
- *      Author: degne
+/**
+ ******************************************************************************
+ * \file    VCOM.cpp
+ * \author  Lucas Degner
+ * \version V1.0.0
+ * \date    05.02.2019
+ * \brief   Implementation of USART interface class and functions
+ ******************************************************************************
  */
 
 #include "VCOM.h"

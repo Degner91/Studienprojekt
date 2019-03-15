@@ -1,31 +1,40 @@
-/*
- * Button.cpp
- *
- *  Created on: 15.02.2019
- *      Author: degne
+/**
+ ******************************************************************************
+ * \file    Button.cpp
+ * \author  Lucas Degner
+ * \version V1.0.0
+ * \date    15.02.2019
+ * \brief   Implementation of button class and functions
+ ******************************************************************************
  */
 
 #include "Button.h"
 #include "stm32f0xx_rcc.h"
 #include "stm32f0xx_gpio.h"
+#include "stm32f0xx_exti.h"
 
 void Button::Initialize()
 {
+	RCC_AHBPeriphClockCmd(RCC_AHBENR_GPIOAEN, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBENR_GPIODEN, ENABLE);
 
 	GPIO_InitTypeDef gpio;
 
 	gpio.GPIO_Mode = GPIO_Mode_IN;
-	gpio.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2;
+	gpio.GPIO_Pin = GPIO_Pin_0;
 	gpio.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOA, &gpio);
 
+	gpio.GPIO_Mode = GPIO_Mode_IN;
+	gpio.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2;
+	gpio.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOD, &gpio);
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
 	EXTI_InitTypeDef exti;
 
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource0);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource1);
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource2);
 
@@ -36,8 +45,8 @@ void Button::Initialize()
 
 	EXTI_Init(&exti);
 
-	NVIC_SetPriority(EXTI0_1_IRQn, 1);
-	NVIC_SetPriority(EXTI2_3_IRQn, 1);
+	NVIC_SetPriority(EXTI0_1_IRQn, 0);
+	NVIC_SetPriority(EXTI2_3_IRQn, 0);
 	NVIC_EnableIRQ(EXTI0_1_IRQn);
 	NVIC_EnableIRQ(EXTI2_3_IRQn);
 

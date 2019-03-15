@@ -1,12 +1,17 @@
-/*
- * TFT_Display.c
- *
- *  Created on: 30.01.2019
- *      Author: degne
+/**
+ ******************************************************************************
+ * \file    TFT_Display.cpp
+ * \author  Lucas Degner
+ * \version V1.0.0
+ * \date    30.01.2019
+ * \brief   Implementation of TFT display class and functions
+ * \note	Original by FH OÖ Embedded Systems Lab
+ ******************************************************************************
  */
 
-#include "stm32f0xx.h"
 #include "TFT_Display.h"
+#include "stm32f0xx_rcc.h"
+#include "stm32f0xx_gpio.h"
 #include "Delay.h"
 
 /* Constants for the pin placement */
@@ -202,7 +207,7 @@ void TFT_Display::DrawChar(PositionType const * const p, char const c)
 	{
 		/* Draw the chars bitmap */
 		RectType const tmpRect = { *p, glyph->width, font->height };
-		DrawImage1bpp(&tmpRect, glyph->bitmap, foregroundColor);
+		DrawImage1bpp(&tmpRect, glyph->bitmap);
 	}
 }
 
@@ -233,7 +238,59 @@ void TFT_Display::DrawString(PositionType const * const p, char const * const s)
 	}
 }
 
-void TFT_Display::DrawImage1bpp(RectType const * const rect, uint32_t const * const data, uint32_t const colours)
+void TFT_Display::DrawCharInv(PositionType const * const p, char const c)
+{
+	Font_GlyphType const * glyph = &font->glyphs[font->glyphMap[(uint8_t) c]];
+
+	/* Check boundaries */
+	if (((p->x + glyph->width) > WIDTH) || ((p->y + font->height) > HEIGHT))
+	{
+		return;
+	}
+
+	/* Check if bitmap available and if not draw background colour rectangle */
+	if (glyph->bitmap == 0)
+	{
+		/* Draw only background colour */
+		RectType const tmpRect = { *p, glyph->width, font->height };
+		DrawFilledArea(&tmpRect, foregroundColor);
+	}
+	else
+	{
+		/* Draw the chars bitmap */
+		RectType const tmpRect = { *p, glyph->width, font->height };
+		DrawImage1bppInv(&tmpRect, glyph->bitmap);
+	}
+}
+
+void TFT_Display::DrawStringInv(PositionType const * const p, char const * const s)
+{
+	static char const strEnd = '\0';
+	static char const endl = '\n';
+
+	char const * str = s;
+	char currCh = 0;
+	PositionType currPos = *p;
+
+	/* Draw char after char till terminating 0 is found */
+	while ((currCh = *str++) != strEnd)
+	{
+		/* Check if line break intended */
+		if (currCh == endl)
+		{
+			/* Increment y position and set x back to initial */
+			currPos.y += font->height;
+			currPos.x = p->x;
+		}
+		else
+		{
+			DrawCharInv(&currPos, currCh);
+			currPos.x += font->glyphs[font->glyphMap[(uint8_t)currCh]].width;
+		}
+	}
+}
+
+void TFT_Display::DrawImage1bpp(RectType const * const rect, uint32_t const * const data)
 {
 	/* Set window */
 	SetWindow(rect);
@@ -261,6 +318,38 @@ void TFT_Display::DrawImage1bpp(RectType const * const rect, uint32_t const * co
 		{
 			/* Else draw pixel in bakground colour */
 			WritePixel(backgroundColor);
+		}
+	}
+}
+
+void TFT_Display::DrawImage1bppInv(RectType const * const rect, uint32_t const * const data)
+{
+	/* Set window */
+	SetWindow(rect);
+	/* Send write command */
+	WriteCmd(TFT_Cmd_RAMWR);
+	/* Init pixel transfer */
+	GPIOE->BSRR = TFT_DC;
+
+	uint32_t currBitMask = 0;
+	uint32_t currVal = 0;
+
+	for (uint32_t i = 0; i < (rect->width * rect->height); i++)
+	{
+		/* limits i range from 0 to 31 */
+		currBitMask = 1u << (i & 0x1Fu);
+		currVal = data[i >> 5u];
+
+		/* Check if current pixel should be drawn in foreground colour */
+		if ((currVal & currBitMask) == currBitMask)
+		{
+			/* If bit is set draw pixel */
+			WritePixel(backgroundColor);
+		}
+		else
+		{
+			/* Else draw pixel in bakground colour */
+			WritePixel(foregroundColor);
 		}
 	}
 }

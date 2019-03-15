@@ -1,8 +1,11 @@
-/*
- * Delay.c
- *
- *  Created on: 30.01.2019
- *      Author: degne
+/**
+ ******************************************************************************
+ * \file    Delay.cpp
+ * \author  Lucas Degner
+ * \version V1.0.0
+ * \date    30.01.2019
+ * \brief   Definition of SysTick and delay functions
+ ******************************************************************************
  */
 
 #include "Delay.h"

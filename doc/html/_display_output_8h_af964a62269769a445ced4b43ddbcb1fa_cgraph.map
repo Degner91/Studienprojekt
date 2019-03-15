@@ -1,0 +1,4 @@
+<map id="Display_PrintMacList" name="Display_PrintMacList">
+<area shape="rect" id="node1" title="Print all received MAC addresses on display." alt="" coords="5,13,151,39"/>
+<area shape="rect" id="node2" href="$class_frame_decoder.html#ae016b1ba51f459b9f835139c1b705501" title="Get current number of entries in NetData array." alt="" coords="199,5,361,47"/>
+</map>

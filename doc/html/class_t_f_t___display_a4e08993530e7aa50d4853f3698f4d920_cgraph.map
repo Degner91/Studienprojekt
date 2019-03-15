@@ -1,0 +1,4 @@
+<map id="TFT_Display::DrawStringInv" name="TFT_Display::DrawStringInv">
+<area shape="rect" id="node1" title="Draw a string with the registered font to the given position Foreground and background colors are swa..." alt="" coords="5,5,185,32"/>
+<area shape="rect" id="node2" href="$class_t_f_t___display.html#aa6a21d873681e2aeea29462a8cf5b519" title="Draw a character with the registered font to the given position Foreground and background colors are ..." alt="" coords="233,5,407,32"/>
+</map>

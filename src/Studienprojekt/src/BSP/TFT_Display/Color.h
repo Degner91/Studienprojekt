@@ -1,3 +1,13 @@
+/**
+ ******************************************************************************
+ * \file    Color.h
+ * \author  FH OÖ Embedded Systems Lab
+ * \version V1.0.0
+ * \date    -
+ * \brief   -
+ * \note	Original by FH OÖ Embedded Systems Lab
+ ******************************************************************************
+ */
 
 #ifndef __COLORS_H
 #define __COLORS_H

@@ -1,8 +1,11 @@
-/*
- * LED.cpp
- *
- *  Created on: 05.02.2019
- *      Author: degne
+/**
+ ******************************************************************************
+ * \file    LED.cpp
+ * \author  Lucas Degner
+ * \version V1.0.0
+ * \date    05.02.2019
+ * \brief   Implementation of LED class and functions
+ ******************************************************************************
  */
 
 #include "LED.h"

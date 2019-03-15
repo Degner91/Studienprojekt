@@ -1,0 +1,5 @@
+<map id="FrameDecoder::EthFrame_Decode" name="FrameDecoder::EthFrame_Decode">
+<area shape="rect" id="node1" title="Decode an ethernet frame and save collected data in class." alt="" coords="5,35,177,76"/>
+<area shape="rect" id="node2" href="$class_frame_decoder.html#a5e96d34c7f647464fa1d7ba33ec8acfc" title="Initialize given NetData all zero." alt="" coords="240,5,403,47"/>
+<area shape="rect" id="node3" href="$class_frame_decoder.html#a314d524be8ded74aceb55566f37090dd" title="Add NetData manually." alt="" coords="225,71,417,98"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="RectType" name="RectType">
+<area shape="rect" id="node1" title="Rectangle definition with one coordinate, width and height." alt="" coords="15,160,93,252"/>
+<area shape="rect" id="node2" href="$struct_position_type.html" title="2D coordinate position" alt="" coords="5,5,103,97"/>
+</map>

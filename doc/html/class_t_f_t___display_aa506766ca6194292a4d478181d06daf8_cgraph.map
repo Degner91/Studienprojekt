@@ -1,0 +1,4 @@
+<map id="TFT_Display::DrawLine" name="TFT_Display::DrawLine">
+<area shape="rect" id="node1" title="Draw a line from start to end position with the foreground color." alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node2" href="$class_t_f_t___display.html#a0099c0fedc2aa4e4d101bef89466ce26" title="Draw a pixel on a defined position with the foreground color." alt="" coords="208,5,368,32"/>
+</map>

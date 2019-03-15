@@ -24,7 +24,7 @@
 							<option id="com.atollic.truestudio.toolchain_options.mcu.812976403" name="Microcontroller" superClass="com.atollic.truestudio.toolchain_options.mcu" useByScannerDiscovery="false" value="STM32F072VB" valueType="string"/>
 							<option id="com.atollic.truestudio.toolchain_options.vendor.1606324284" name="Vendor name" superClass="com.atollic.truestudio.toolchain_options.vendor" useByScannerDiscovery="false" value="STMicroelectronics" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.atollic.truestudio.exe.debug.toolchain.platform.1972283573" isAbstract="false" name="Debug platform" osList="all" superClass="com.atollic.truestudio.exe.debug.toolchain.platform"/>
-							<builder buildPath="${workspace_loc:/Studienprojekt}/Debug" customBuilderProperties="toolChainpathString=C:\\Program Files (x86)\\Atollic\\TrueSTUDIO for STM32 9.2.0\\ARMTools\\bin|toolChainpathType=1|com.atollic.truestudio.common_options.target.vendor=STMicroelectronics|com.atollic.truestudio.common_options.target.mcu=STM32F072VB|" id="com.atollic.truestudio.mbs.builder1.416423192" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="com.atollic.truestudio.mbs.builder1"/>
+							<builder buildPath="${workspace_loc:/Studienprojekt}/Debug" customBuilderProperties="toolChainpathString=C:\\Program Files (x86)\\Atollic\\TrueSTUDIO for STM32 9.2.0\\ARMTools\\bin|toolChainpathType=1|com.atollic.truestudio.common_options.target.vendor=STMicroelectronics|com.atollic.truestudio.common_options.target.mcu=STM32F072VB|" id="org.eclipse.cdt.build.core.internal.builder.534643661" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="org.eclipse.cdt.build.core.internal.builder"/>
 							<tool id="com.atollic.truestudio.exe.debug.toolchain.as.188705650" name="Assembler" superClass="com.atollic.truestudio.exe.debug.toolchain.as">
 								<option id="com.atollic.truestudio.common_options.target.mcpu.537699136" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" useByScannerDiscovery="false" value="STM32F072VB" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.endianess.1716638270" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess" useByScannerDiscovery="false"/>
@@ -32,10 +32,11 @@
 								<option id="com.atollic.truestudio.common_options.target.fpucore.1029434783" name="FPU" superClass="com.atollic.truestudio.common_options.target.fpucore" useByScannerDiscovery="false" value="com.atollic.truestudio.common_options.target.fpucore.None" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.fpu.815372917" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu" useByScannerDiscovery="false"/>
 								<option id="com.atollic.truestudio.common_options.target.interwork.976205365" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork" useByScannerDiscovery="false"/>
-								<option id="com.atollic.truestudio.as.general.incpath.659827573" name="Include path" superClass="com.atollic.truestudio.as.general.incpath" useByScannerDiscovery="false"/>
-								<option id="com.atollic.truestudio.as.symbols.defined.1819044631" name="Defined symbols" superClass="com.atollic.truestudio.as.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+								<option id="com.atollic.truestudio.as.general.incpath.659827573" name="Include path" superClass="com.atollic.truestudio.as.general.incpath" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/BSP/W5500}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/NetAnalyser}&quot;"/>
 								</option>
+								<option id="com.atollic.truestudio.as.symbols.defined.1819044631" name="Defined symbols" superClass="com.atollic.truestudio.as.symbols.defined" useByScannerDiscovery="false"/>
 								<inputType id="com.atollic.truestudio.as.input.1812867468" name="Input" superClass="com.atollic.truestudio.as.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.debug.toolchain.gcc.1619803135" name="C Compiler" superClass="com.atollic.truestudio.exe.debug.toolchain.gcc">
@@ -50,16 +51,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/system/STM32F0xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/system}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/Utilities}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/LED}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/TFT_Display}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/VCOM}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/W5500}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/Button}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/NetAnalyser}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.601390342" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
 									<listOptionValue builtIn="false" value="STM32F072"/>
+									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+									<listOptionValue builtIn="false" value="_WIZCHIP_=5500"/>
 								</option>
 								<option id="com.atollic.truestudio.gcc.optimization.prep_garbage.1500846137" name="Prepare dead code removal " superClass="com.atollic.truestudio.gcc.optimization.prep_garbage" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.gcc.optimization.prep_data.773805511" name="Prepare dead data removal" superClass="com.atollic.truestudio.gcc.optimization.prep_data" useByScannerDiscovery="false" value="true" valueType="boolean"/>
@@ -86,16 +84,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/system/STM32F0xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/system}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/Utilities}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/LED}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/VCOM}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/TFT_Display}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/W5500}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP/Button}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/BSP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Studienprojekt/src/NetAnalyser}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.gpp.symbols.defined.782129148" name="Defined symbols" superClass="com.atollic.truestudio.gpp.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
 									<listOptionValue builtIn="false" value="STM32F072"/>
+									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+									<listOptionValue builtIn="false" value="_WIZCHIP_=5500"/>
 								</option>
 								<option id="com.atollic.truestudio.gpp.optimization.prep_garbage.1031431298" name="Prepare dead code removal" superClass="com.atollic.truestudio.gpp.optimization.prep_garbage" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.gpp.optimization.prep_data.2144210002" name="Prepare dead data removal" superClass="com.atollic.truestudio.gpp.optimization.prep_data" useByScannerDiscovery="false" value="true" valueType="boolean"/>
@@ -149,7 +144,7 @@
 							<option id="com.atollic.truestudio.toolchain_options.mcu.1599786160" name="Microcontroller" superClass="com.atollic.truestudio.toolchain_options.mcu" value="STM32F072VB" valueType="string"/>
 							<option id="com.atollic.truestudio.toolchain_options.vendor.2035560209" name="Vendor name" superClass="com.atollic.truestudio.toolchain_options.vendor" value="STMicroelectronics" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.atollic.truestudio.exe.release.toolchain.platform.270964955" isAbstract="false" name="release platform" superClass="com.atollic.truestudio.exe.release.toolchain.platform"/>
-							<builder buildPath="${workspace_loc:/Studienprojekt}/Release" customBuilderProperties="com.atollic.truestudio.common_options.target.vendor=STMicroelectronics|com.atollic.truestudio.common_options.target.mcu=STM32F072VB|" id="com.atollic.truestudio.mbs.builder1.82403718" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="com.atollic.truestudio.mbs.builder1"/>
+							<builder buildPath="${workspace_loc:/Studienprojekt}/Release" customBuilderProperties="com.atollic.truestudio.common_options.target.mcu=STM32F072VB|com.atollic.truestudio.common_options.target.vendor=STMicroelectronics|" id="com.atollic.truestudio.mbs.builder1.82403718" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="com.atollic.truestudio.mbs.builder1"/>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.as.517350438" name="Assembler" superClass="com.atollic.truestudio.exe.release.toolchain.as">
 								<option id="com.atollic.truestudio.common_options.target.mcpu.1045416783" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F072VB" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.endianess.1236492135" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
@@ -157,6 +152,10 @@
 								<option id="com.atollic.truestudio.common_options.target.fpucore.960823174" name="FPU" superClass="com.atollic.truestudio.common_options.target.fpucore" value="com.atollic.truestudio.common_options.target.fpucore.None" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.fpu.1350818084" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu"/>
 								<option id="com.atollic.truestudio.common_options.target.interwork.1591353636" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork"/>
+								<option id="com.atollic.truestudio.as.general.incpath.1125353530" name="Include path" superClass="com.atollic.truestudio.as.general.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/BSP/W5500}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/NetAnalyser}&quot;"/>
+								</option>
 								<inputType id="com.atollic.truestudio.as.input.414711583" name="Input" superClass="com.atollic.truestudio.as.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.gcc.1935115174" name="C Compiler" superClass="com.atollic.truestudio.exe.release.toolchain.gcc">
@@ -166,6 +165,10 @@
 								<option id="com.atollic.truestudio.common_options.target.fpucore.1046216826" name="FPU" superClass="com.atollic.truestudio.common_options.target.fpucore" value="com.atollic.truestudio.common_options.target.fpucore.None" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.fpu.1806514604" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu"/>
 								<option id="com.atollic.truestudio.common_options.target.interwork.1498322360" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork"/>
+								<option id="com.atollic.truestudio.gcc.directories.select.1666490499" name="Include path" superClass="com.atollic.truestudio.gcc.directories.select" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/BSP/W5500}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/NetAnalyser}&quot;"/>
+								</option>
 								<inputType id="com.atollic.truestudio.gcc.input.1487451477" superClass="com.atollic.truestudio.gcc.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.ld.1586156527" name="C Linker" superClass="com.atollic.truestudio.exe.release.toolchain.ld">
@@ -183,6 +186,10 @@
 								<option id="com.atollic.truestudio.common_options.target.fpucore.535291282" name="FPU" superClass="com.atollic.truestudio.common_options.target.fpucore" value="com.atollic.truestudio.common_options.target.fpucore.None" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.fpu.1074696015" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu"/>
 								<option id="com.atollic.truestudio.common_options.target.interwork.428077697" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork"/>
+								<option id="com.atollic.truestudio.gpp.directories.select.44507984" name="Include path" superClass="com.atollic.truestudio.gpp.directories.select" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/BSP/W5500}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/NetAnalyser}&quot;"/>
+								</option>
 								<inputType id="com.atollic.truestudio.gpp.input.957895281" superClass="com.atollic.truestudio.gpp.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.exe.release.toolchain.ldcc.2102441215" name="C++ Linker" superClass="com.atollic.truestudio.exe.release.toolchain.ldcc">

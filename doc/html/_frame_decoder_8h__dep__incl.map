@@ -1,0 +1,9 @@
+<map id="src/Studienprojekt/src/NetAnalyser/FrameDecoder.h" name="src/Studienprojekt/src/NetAnalyser/FrameDecoder.h">
+<area shape="rect" id="node1" title="Definition of ethernet frame decoder class and functions." alt="" coords="339,5,558,47"/>
+<area shape="rect" id="node2" href="$_terminal_output_8h.html" title=" " alt="" coords="93,95,316,136"/>
+<area shape="rect" id="node5" href="$_display_output_8h.html" title="Definition of display output." alt="" coords="341,95,557,136"/>
+<area shape="rect" id="node7" href="$_frame_decoder_8cpp.html" title="Implementation of ethernet frame decoder class and functions." alt="" coords="581,95,815,136"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title=" " alt="" coords="265,184,392,225"/>
+<area shape="rect" id="node4" href="$_terminal_output_8cpp.html" title="Implementation of terminal output functions." alt="" coords="5,184,241,225"/>
+<area shape="rect" id="node6" href="$_display_output_8cpp.html" title="Implementation of display output." alt="" coords="416,184,647,225"/>
+</map>

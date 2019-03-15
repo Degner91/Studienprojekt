@@ -1,0 +1,4 @@
+<map id="Delay_sec" name="Delay_sec">
+<area shape="rect" id="node1" title="Blocking delay for n times 1s." alt="" coords="5,5,88,32"/>
+<area shape="rect" id="node2" href="$_delay_8cpp.html#a657f82e3f1cdff88e4970e8d9686a0aa" title="Get current tick count." alt="" coords="136,5,203,32"/>
+</map>
